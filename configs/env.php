@@ -1,6 +1,6 @@
 <?php
 
-define('BASE_URL',          'http://localhost/su25/bl2/ca6/BaseMVC/');
+define('BASE_URL',          'http://localhost/su25/bl2/ca6/php1_mvc_crud/');
 
 define('PATH_ROOT',         __DIR__ . '/../');
 

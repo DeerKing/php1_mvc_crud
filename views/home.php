@@ -17,7 +17,12 @@
         <?php foreach ($products as $product): ?>
             <tr>
                 <td><?php echo htmlspecialchars($product['id']); ?></td>
-                <td><?php echo htmlspecialchars($product['name']); ?></td>
+                <td>
+                    <a href="<?php echo BASE_URL . 'index.php?action=product&id=' . $product['id']; ?>">
+                   
+                    <?php echo htmlspecialchars($product['name']); ?>
+                    </a>
+                </td>
                 <td><?php echo htmlspecialchars($product['price']); ?></td>
                 <td><?php echo htmlspecialchars($product['description']); ?></td>
             </tr>
