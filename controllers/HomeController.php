@@ -6,6 +6,10 @@ class HomeController
         // Load the home view
         $productModel = new Product();
         $products = $productModel->getAllProducts(); // Lấy tất cả sản phẩm
+        if(isset($_GET['keyword']) && !empty($_GET['keyword'])) {
+            $keyword = $_GET['keyword'];
+            $products = $productModel->search($keyword); // Tìm kiếm sản phẩm theo từ khóa
+        }
         // echo "<pre>";
         // print_r($products); // In ra mảng sản phẩm để kiểm tra
         // die();

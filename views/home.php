@@ -7,6 +7,17 @@
 </head>
 <body>
     <h1>Danh sách sản phẩm</h1>
+    <form action="" method="GET">
+        <input type="hidden" name="action" value="home">
+        <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm..." value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>">
+        <button type="submit">Tìm kiếm</button>
+    </form>
+    <hr>
+    <?php
+    if(count($products) === 0) {
+        echo "<p>Không có sản phẩm nào.</p>";        
+    }
+    ?>
     <table border="1" cellpadding="10" cellspacing="0">
         <tr>
             <th>ID</th>
