@@ -1,7 +1,8 @@
 <?php
 
 $action = $_GET['action'] ?? '/';
+$homeController = new HomeController();
 match ($action) {
-    '/'         => (new HomeController)->index(),
-    'product'   => (new HomeController)->show(),
+    '/'         => $homeController->index(),
+    'product'   => $homeController->show(),
 };
