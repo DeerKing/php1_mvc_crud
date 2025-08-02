@@ -1,15 +1,27 @@
 <?php
 class Product extends BaseModel {
     protected $table = 'products';
-
+    public function countProducts() {
+        $query = "SELECT COUNT(*) FROM " . $this->table; // Câu lệnh SQL để đếm số lượng sản phẩm
+        $stmt = $this->pdo->prepare($query); // Chuẩn bị câu lệnh SQL
+        $stmt->execute(); // Thực thi câu lệnh SQL
+        return $stmt->fetchColumn(); // Trả về số lượng sản phẩm
+    }
     /**
      * Lấy tất cả sản phẩm trong database.
      */
-    public function getAllProducts() {
-        $query = "SELECT * FROM " . $this->table;//Viết câu lệnh SQL để lấy tất cả sản phẩm
+    public function getAllProducts($page = 1, $limit = 10) {
+        $query = "SELECT * FROM ". $this->table ." ORDER BY id ASC LIMIT :start_from, :limit";
+        // Câu lệnh SQL để lấy tất cả sản phẩm, sắp xếp theo ID ASC lầ giảm dần, DESC là tăng dần
+        $start_from = ($page - 1) * $limit; // Tính toán offset dựa trên trang hiện tại và giới hạn
+        //Viết câu lệnh SQL để lấy tất cả sản phẩm
         $stmt = $this->pdo->prepare($query);// Chuẩn bị câu lệnh SQL  
-        //Prepared Statements để tranh lỗi tấn công SQL Injection      
+        //Prepared Statements để tranh lỗi tấn công SQL Injection     s 
+        // Bằng cách sử dụng dấu hai chấm (:) trước tên biến, chúng ta có thể sử dụng các tham số trong câu lệnh SQL
+        $stmt->bindParam(':start_from', $start_from, PDO::PARAM_INT); // Gán giá trị offset với kiểu dữ liệu là số nguyên
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT); // Gán giá trị giới hạn với kiểu dữ liệu là số nguyên
         $stmt->execute();// Thực thi câu lệnh SQL
+
         // FETCH_ASSOC (default): Trả về dữ liệu dạng mảng với key là tên của column (column của các table trong database)
         // FETCH_BOTH : Trả về dữ liệu dạng mảng với key là tên của column và cả số thứ tự của column
         // FETCH_NUM: Trả về dữ liệu dạng mảng với key là số thứ tự của column

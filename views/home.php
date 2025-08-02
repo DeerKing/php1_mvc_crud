@@ -39,5 +39,15 @@
             </tr>
         <?php endforeach; ?>
     </table>
+    <div class="pagination">Trang
+        <?php
+        for ($i = 1; $i <= $total_pages; $i++) {
+            if ($i == $page) {
+                echo "<strong>$i</strong> "; // Trang hiện tại sẽ được in đậm
+            } else {
+                echo "<a href='?action=home&page=$i'>$i</a> "; // Liên kết đến các trang khác
+            }
+        }
+        ?>
 </body>
 </html>

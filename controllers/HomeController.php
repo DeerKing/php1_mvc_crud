@@ -3,9 +3,18 @@
 class HomeController
 {
    public function index() {
-        // Load the home view
+        $page = $_GET['page'] ?? 1; // Lấy trang hiện tại từ URL, mặc định là trang 1
+        // Kiểm tra và đảm bảo trang là một số nguyên dương
+        if (!is_numeric($page) || $page < 1) {
+            $page = 1; // Nếu không hợp lệ, đặt về trang 1
+        }        
+        $limit = 3; // Số lượng sản phẩm hiển thị trên mỗi trang
         $productModel = new Product();
-        $products = $productModel->getAllProducts(); // Lấy tất cả sản phẩm
+         // Giả sử tổng số sản phẩm là 100 và mỗi trang hiển thị 10 sản phẩm
+        $total_products = $productModel->countProducts(); // Lấy tổng số sản phẩm từ model
+        $total_pages = ceil($total_products / $limit); // Tính tổng số trang
+
+        $products = $productModel->getAllProducts($page, $limit); // Lấy tất cả sản phẩm
         if(isset($_GET['keyword']) && !empty($_GET['keyword'])) {
             $keyword = $_GET['keyword'];
             $products = $productModel->search($keyword); // Tìm kiếm sản phẩm theo từ khóa
@@ -13,6 +22,7 @@ class HomeController
         // echo "<pre>";
         // print_r($products); // In ra mảng sản phẩm để kiểm tra
         // die();
+        // Load the home view
         require_once 'views/home.php';
     }
     public function show() {
