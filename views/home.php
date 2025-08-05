@@ -33,7 +33,7 @@
         <?php foreach ($products as $product): ?>
             <tr>
                 <td><?php echo htmlspecialchars($product['id']); ?></td>
-                <td><img src=<?php echo $product['image'];?> width="80"/></td>
+                <td><img src="<?php echo $product['image'];?>" width="80"/></td>
                 <td>
                     <a href="<?php echo BASE_URL . 'index.php?action=product&id=' . $product['id']; ?>">
                    
