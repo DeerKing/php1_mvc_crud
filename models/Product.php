@@ -57,12 +57,42 @@ class Product extends BaseModel {
      */
     public function addProduct($data) {
         $query = "INSERT INTO " . $this->table . " (name, price, description, image) VALUES (:name, :price, :description, :image)";
-        $stmt = $this->pdo->prepare($query);
-        $stmt->bindParam(':name', $data['name']);
-        $stmt->bindParam(':price', $data['price']);
-        $stmt->bindParam(':description', $data['description']);
-        $stmt->bindParam(':image', $data['image']);
-        return $stmt->execute(); // Trả về true nếu thêm thành công, false nếu thất bại
+        $stmt = $this->pdo->prepare($query);        
+        return $stmt->execute([
+            ':name' => $data['name'],
+            ':price' => $data['price'],
+            ':description' => $data['description'],
+            ':image' => $data['image']
+        ]); // Trả về true nếu thêm thành công, false nếu thất bại
+
+        /**
+         * //Cách 1: Viết tường minh câu SQL
+            $query =  "INSERT INTO products (name, price, description, image)  
+                    VALUES ('".$data['name']."', ". $data['price'] .", '". $data['description'] ."', '".$data['image'] ."')";
+            $stmt = $this->pdo->prepare($query);
+            return $stmt->execute();
+
+            //Cach 2: Viết dùng bindValue
+            $query = "INSERT INTO " . $this->table . " (name, price) 
+            VALUES (:name, :price)";
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(':name', $data['name']);
+            $stmt->bindParam(':price', $data['price']);
+            $stmt->execute();
+
+            //Cach 3: Viết dùng bindParam
+            $query = "INSERT INTO " . $this->table . " (name, price) 
+            VALUES (:name, :price)";
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute([$data['name'], $data['price']]);
+
+
+
+            //Cách 4: Viết dùng bindValue
+            $query = "INSERT INTO " . $this->table . " (name, price) VALUES (?, ?)";
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute([$data['name'], $data['price']]);
+         */
     }
     public function updateProduct($id, $data) {
         $query = "UPDATE " . $this->table . " SET name = :name, price = :price, description = :description, image = :image WHERE id = :id";
