@@ -110,4 +110,10 @@ class Product extends BaseModel {
         $stmt->bindParam(':id', $id);
         return $stmt->execute(); // Trả về true nếu xóa thành công, false nếu thất bại
     }   
+    public function getTotalQuantity() {
+        $query = "SELECT SUM(quantity) as total FROM " . $this->table; // Câu lệnh SQL để tính tổng số lượng sản phẩm
+        $stmt = $this->pdo->prepare($query); // Chuẩn bị câu lệnh SQL
+        $stmt->execute(); // Thực thi câu lệnh SQL
+        return $stmt->fetch(); // Trả về tổng số lượng sản phẩm
+    }
 }

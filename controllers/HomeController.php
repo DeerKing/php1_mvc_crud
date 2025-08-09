@@ -19,9 +19,8 @@ class HomeController
             $keyword = $_GET['keyword'];
             $products = $productModel->search($keyword); // Tìm kiếm sản phẩm theo từ khóa
         }
-        // echo "<pre>";
-        // print_r($products); // In ra mảng sản phẩm để kiểm tra
-        // die();
+        $total_quantity = $productModel->getTotalQuantity(); // Lấy tổng số lượng sản phẩm
+       
         // Load the home view
         require_once 'views/home.php';
     }

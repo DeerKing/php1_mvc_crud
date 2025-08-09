@@ -6,6 +6,16 @@
     <title>Document</title>
 </head>
 <body>
+    <h2>Tổng sản phẩm có trong kho là: 
+        <?php
+        // Hiển thị tổng số lượng sản phẩm
+        if (isset($total_quantity)) {
+            echo number_format($total_quantity['total']);
+        } else {
+            echo "Không có dữ liệu";
+        }
+        ?>
+    </h2>
     <h1>Danh sách sản phẩm</h1>
     
     <form action="" method="GET">
